@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Educativo - Phishing Demo</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: white; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .technique { background: #e3f2fd; padding: 15px; margin: 10px 0; border-left: 4px solid #2196f3; }
+        .warning { background: #ffebee; color: #c62828; padding: 15px; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 DEMO EDUCATIVA DE PHISHING COGNITIVO - ByIzw</h1>
+        
+        <div class="warning">
+            ⚠️ ESTO ES SOLO PARA EDUCACIÓN - NO USAR EN ATAQUES REALES
+        </div>
+        
+        <div class="card">
+            <h2>Técnicas de Ingeniería Cognitiva Utilizadas</h2>
+            <div class="technique"><strong>🎭 Autoridad:</strong> Nos presentamos como el banco oficial</div>
+            <div class="technique"><strong>⏰ Urgencia:</strong> Timer de 10 minutos para presión</div>
+            <div class="technique"><strong>😨 Miedo:</strong> Cargo de $950 no autorizado</div>
+            <div class="technique"><strong>⚓ Anclaje:</strong> $950 como referencia, PIN parece pequeño</div>
+            <div class="technique"><strong>🔐 Confianza:</strong> Diseño profesional, badges de seguridad</div>
+        </div>
+        
+        <div class="card">
+            <h2>Datos Capturados (Demo)</h2>
+            <table>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Tarjeta</th>
+                    <th>PIN</th>
+                </tr>
+                {% for victim in victims %}
+                <tr>
+                    <td>{{ victim.timestamp }}</td>
+                    <td>{{ victim.data.card[:4] }}...{{ victim.data.card[-4:] }}</td>
+                    <td>****</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>Cómo Protegerte</h2>
+            <ul>
+                <li>✅ NINGÚN banco te pide el PIN por internet</li>
+                <li>✅ Verifica siempre la URL (https://banco.com)</li>
+                <li>✅ No hagas clic en enlaces de emails/SMS</li>
+                <li>✅ Llama al número oficial del banco</li>
+                <li>✅ Usa 2FA siempre que sea posible</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
