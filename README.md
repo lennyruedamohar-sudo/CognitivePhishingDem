@@ -1,102 +1,155 @@
 # Cognitive Phishing Demo
 
-Simulación educativa de phishing basada en ingeniería social y sesgos cognitivos. El sitio permite observar cómo una alerta falsa combina autoridad, urgencia, miedo, anclaje y confianza para presionar a una persona.
+"**Educational Social Engineering Simulation Platform**
 
-> **Aviso:** úsalo únicamente en laboratorios, talleres o entornos controlados. Nunca introduzcas datos reales ni distribuyas la simulación como si fuera un banco.
+Una plataforma de demostración creada con **Flask** para estudiar cómo funcionan los ataques de phishing basados en ingeniería social y sesgos cognitivos.  
+El objetivo es **enseñar a detectar y comprender las técnicas psicológicas utilizadas en el phishing moderno**.
 
-## Qué incluye
+---
 
-- Simulación responsive para escritorio, tableta y móvil.
-- Marcadores visibles que señalan las técnicas utilizadas.
-- Panel educativo en `/admin/demo` y análisis guiado en `/analysis`.
-- Registro estructurado en SQLite (`data/phishing_demo.sqlite3` por defecto).
-- Panel educativo protegido por usuario, contraseña y sesión.
-- Protección de datos: el registro solo conserva una tarjeta enmascarada y metadatos de los campos intentados; nunca guarda tarjeta completa, CVV, PIN, IP o User-Agent.
+ #Advertencia Legal
+Este proyecto fue diseñado exclusivamente para fines de **concienciación y formación**.
 
-## Instalación
+❗ **No debe utilizarse para:**
+-Ataques reales
+-Recolección de datos sensibles
+-Campañas de phishing
+-Ingeniería social fuera de entornos controlados
 
-Requiere Python 3.9 o posterior.
+✅ **Uso recomendado en:**
+-Laboratorios de ciberseguridad
+-Formación en seguridad
+-Talleres de *awareness*
+-Simulaciones controladas
 
-```bash
+---
+
+ #Objetivo del Proyecto
+Los ataques modernos de phishing ya no dependen solo de tecnología, sino de **psicología humana**.
+
+Esta demo muestra cómo los atacantes utilizan:
+-Sesgos cognitivos  
+-Manipulación emocional  
+-Autoridad percibida  
+-Presión temporal  
+-Diseño de interfaces confiables  
+
+para inducir a una víctima a revelar información sensible.
+
+---
+
+ #Instalación y Uso
+
+ #Crear entorno virtual
+
+ bash
 python -m venv venv
-```
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
 
-En Windows:
-
-```powershell
-venv\Scripts\Activate.ps1
-```
-
-En Linux/macOS:
-
-```bash
-source venv/bin/activate
-```
-
-Instala dependencias y ejecuta:
-
-```bash
+ Instalar dependencias
+bash
 pip install -r requirements.txt
+
+ Ejecutar en desarrollo
+bash
 python app.py
-```
 
-Abre <http://localhost:5000>.
+ La aplicación estará disponible en:
+👉 <http://localhost:5000> (Página principal)
+👉 <http://localhost:5000/admin/demo> (Panel educativo)
+👉 <http://localhost:5000/analysis> (Análisis cognitivo)
 
-## Rutas
+🌐 Despliegue en Render
+Archivos necesarios
+En la raíz del proyecto asegúrate de tener:
 
-| Ruta | Propósito |
-| --- | --- |
-| `/` | Simulación interactiva |
-| `/admin/login` | Acceso del facilitador al panel |
-| `/admin/demo` | Panel educativo y registros seguros, protegido |
-| `/analysis` | Análisis de las técnicas y contramedidas |
-| `/verify` | Endpoint interno que recibe una simulación y la registra enmascarada |
+app.py
 
-## Despliegue con Render
+requirements.txt
 
-- **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `gunicorn app:app`
-- **Python:** 3.11 o posterior
+Procfile
 
-Configura estas variables de entorno en producción y nunca las cometas al repositorio:
+templates/
 
-```text
-FLASK_SECRET_KEY=una-clave-larga-y-aleatoria
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD_HASH=hash-generado-con-werkzeug
-DATABASE_PATH=data/phishing_demo.sqlite3
-COOKIE_SECURE=1
-```
+static/
 
-Genera el hash sin escribir la contraseña en el código:
+README.md
 
-```bash
-python -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('CAMBIA_ESTA_CONTRASEÑA'))"
-```
+Procfile
+txt
+web: gunicorn app:app
 
-`ADMIN_PASSWORD_HASH` es la opción recomendada. `ADMIN_PASSWORD` existe como alternativa para entornos locales temporales, pero no debe usarse en producción. SQLite reemplaza el TXT y evita registros sin estructura; en un despliegue con varios procesos o sin disco persistente conviene apuntar `DATABASE_PATH` a un volumen persistente o migrar el adaptador a PostgreSQL/MySQL.
+requirements.txt
+txt
+Flask==2.3.2
+gunicorn==21.2.0
+itsdangerous==2.1.2
+Werkzeug==2.3.7
+Jinja2==3.1.2
+click==8.1.7
 
-## Estructura
+Pasos de despliegue
+Sube tu proyecto a GitHub.
 
-```text
-.
-├── app.py
-├── requirements.txt
-├── Procfile
-├── models/cognitive.py
-├── data/techniques.json
-├── data/phishing_demo.sqlite3  # generado en ejecución, ignorado por Git
-├── static/
+Ve a <https://render.com> y crea una cuenta.
+
+Selecciona New Web Service y conecta tu repo.
+
+Configura:
+
+Environment: Python 3.11
+
+Build Command:
+bash
+pip install -r requirements.txt
+
+Start Command:
+bash
+gunicorn app:app
+
+Render desplegará tu aplicación y te dará una URL pública tipo:
+👉 <https://cognitivephish.onrender.com>
+
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+
+ #Instalar dependencias
+
+pip install -r requirements.txt
+
+ #Ejecutar en desarrollo
+
+python app.py
+
+📂 Estructura del Proyecto
+
+cognitivephish/
+│── app.py
+│── requirements.txt
+│── Procfile
+│── README.md
+│── templates/
+│   ├── index.html
+│   ├── admin.html
+│   └── analysis.html
+│── static/
 │   ├── style.css
-│   ├── dashboard.css
 │   └── script.js
-└── templates/
-    ├── index.html
-    ├── admin.html
-    ├── analysis.html
-    └── login.html
-```
+│── models/
+│   └── cognitive.py
+│── data/
+│   └── techniques.json
+│── .gitignore
 
-## Licencia
+Capturas de Pantalla
+( Agrega imágenes de la demo en ejecución para hacerlo más atractivo)
 
-MIT. Consulta `LICENSE`.
+🤝 Contribuciones
+Las contribuciones son bienvenidas.
+Por favor abre un issue o envía un pull request.
+
+📜 Licencia
+Este proyecto está bajo la licencia MIT.
+Consulta el archivo LICENSE para más detalles.
